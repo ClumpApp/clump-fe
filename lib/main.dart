@@ -8,7 +8,7 @@ import 'package:http/http.dart';
 
 String username = '';
 String password = '';
-String postURL = 'http://ptsv2.com/t/emtne-1636665188';
+String postURL = 'http://clump-be.azurewebsites.net/login/';
 
 void main() {
   debugPrint('Initial Test');
@@ -26,8 +26,8 @@ print(jsonDecode(response.body));
 void passData(String user, String pass) async {
   print('I passed 1');
   final response = await post(Uri.parse(postURL), body:{
-    'username' : user,
-    'password' : pass
+    'UserName' : user,
+    'Password' : pass
 });
   print('I passed 2');
   print(response.body);
