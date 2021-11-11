@@ -1,8 +1,36 @@
 // main.dart
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+
+
+
+String username = '';
+String password = '';
+String postURL = 'http://ptsv2.com/t/emtne-1636665188';
 
 void main() {
+  debugPrint('Initial Test');
+  
   runApp(const MyApp());
+  getData();
+}
+
+void getData() async {
+Uri website = Uri.parse('http://clump-be.azurewebsites.net/');
+Response response = await get(website);
+print(jsonDecode(response.body));
+}
+
+void passData(String user, String pass) async {
+  print('I passed 1');
+  final response = await post(Uri.parse(postURL), body:{
+    'username' : user,
+    'password' : pass
+});
+  print('I passed 2');
+  print(response.body);
 }
 
 class MyApp extends StatelessWidget {
@@ -51,8 +79,11 @@ class HomePage extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Username',
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: Icon(Icons.person),
                   ),
+                  onChanged:(value) {
+                    username = value;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -65,6 +96,9 @@ class HomePage extends StatelessWidget {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
                   ),
+                  onChanged:(value) {
+                    password = value;
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -80,7 +114,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () => print("."),
+                    onPressed: () => passData(username, password),
                     color: Colors.red,
                     child: const Text(
                       'LOGIN',
