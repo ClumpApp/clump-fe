@@ -1,6 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'home_page.dart';
+
+String username = '';
+String password = '';
+String responseBody = 'Unauthorized';
+String loginURL = 'http://clump-be.azurewebsites.net/login/';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -83,10 +89,23 @@ class LoginPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () => passLoginData(username, password),
+                    onPressed: () {
+                      passLoginData(username, password);
+                      if(responseBody == 'Unauthorized'){
+                        Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginError()),
+            );
+                      } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+                      }
+          },
                     color: Colors.red,
                     child: const Text(
-                      'LOGIN',
+                      'Login',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
@@ -103,9 +122,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-String username = '';
-String password = '';
-String loginURL = 'http://clump-be.azurewebsites.net/login/';
+
 
 
 void getData() async {
@@ -115,11 +132,12 @@ print(jsonDecode(response.body));
 }
 
 void passLoginData(String user, String pass) async {
-  print('I passed 1');
+
   final response = await post(Uri.parse(loginURL), body:{
     'UserName' : user,
     'Password' : pass
 });
-  print('I passed 2');
-  print(response.body);
+
+  responseBody = response.body;
+  
 }
