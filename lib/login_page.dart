@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'home_page.dart';
 import 'constants.dart';
-import 'package:flutter/material.dart';
 
 String username = '';
 String password = '';
-String responseBody = 'Unauthorized';
-String loginURL = 'http://clump-be.azurewebsites.net/login/';
+String loginURL = 'https://clump-be.azurewebsites.net/login/';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -38,9 +35,9 @@ class LoginPage extends StatelessWidget {
         ),
       ),
       body: Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("assets/images/login_background.jpg"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/login_background.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -49,7 +46,7 @@ class LoginPage extends StatelessWidget {
           child: Center(
             child: Card(
               child: Container(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -94,11 +91,24 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()),
-                          );
+                          post(Uri.parse(loginURL), body: {
+                            'UserName': username,
+                            'Password': password
+                          }).then((value) => {
+                                if (value.statusCode == 200)
+                                  {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomePage()),
+                                    )
+                                  }
+                                else
+                                  {
+                                    // TODO Show failed login
+                                  }
+                              });
                         },
                         color: themeColor,
                         child: const Text(
@@ -119,17 +129,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-}
-
-void getData() async {
-  Uri website = Uri.parse('http://clump-be.azurewebsites.net/');
-  Response response = await get(website);
-  print(jsonDecode(response.body));
-}
-
-void passLoginData(String user, String pass) async {
-  final response = await post(Uri.parse(loginURL),
-      body: {'UserName': user, 'Password': pass});
-
-  responseBody = response.body;
 }
