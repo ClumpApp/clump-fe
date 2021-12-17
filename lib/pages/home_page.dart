@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'group/message_details.dart';
+import '../group/message_details.dart';
 import 'package:http/http.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

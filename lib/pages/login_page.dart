@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'home_page.dart';
-import 'constants.dart';
+import '../constants.dart';
 import 'package:flutter/material.dart';
 
 String username = '';
