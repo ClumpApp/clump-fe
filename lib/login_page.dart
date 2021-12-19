@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'util/client.dart';
 import 'home_page.dart';
 import 'constants.dart';
 
 String username = '';
 String password = '';
-String loginURL = 'https://clump-be.azurewebsites.net/login/';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -91,24 +90,23 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          post(Uri.parse(loginURL), body: {
-                            'UserName': username,
-                            'Password': password
-                          }).then((value) => {
-                                if (value.statusCode == 200)
-                                  {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomePage()),
-                                    )
-                                  }
-                                else
-                                  {
-                                    // TODO Show failed login
-                                  }
-                              });
+                          Client.instance
+                              .login(username: username, password: password)
+                              .then((success) => {
+                                    if (success)
+                                      {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomePage()),
+                                        )
+                                      }
+                                    else
+                                      {
+                                        // TODO Show failed login
+                                      }
+                                  });
                         },
                         color: themeColor,
                         child: const Text(
