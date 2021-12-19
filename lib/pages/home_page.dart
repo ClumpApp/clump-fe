@@ -1,10 +1,9 @@
 // ignore_for_file: avoid_unnecessary_containers
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../group/message_details.dart';
-import 'package:http/http.dart';
-import '../constants.dart';
+import 'group/message_details.dart';
+import 'util/client.dart';
+import 'constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,6 +54,11 @@ class HomePage extends StatelessWidget {
                         radius: ((MediaQuery.of(context).size.width) * 0.05),
                       ),
                       Text('Abdullah Coşgun'),
+                      MaterialButton(
+                        onPressed: () => Client.instance
+                            .get(endpoint: '/users')
+                            .then((value) => print(value)),
+                      ),
                       Card(),
                     ]),
               ),
