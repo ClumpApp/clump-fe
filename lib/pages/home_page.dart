@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'group/message_details.dart';
-import 'util/client.dart';
-import 'constants.dart';
+import '../group/message_details.dart';
+import '../util/client.dart';
+import '../constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

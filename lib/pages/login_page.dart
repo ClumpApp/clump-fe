@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'util/client.dart';
+import '../util/client.dart';
 import 'home_page.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 String username = '';
 String password = '';
