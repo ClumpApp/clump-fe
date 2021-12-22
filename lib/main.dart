@@ -1,8 +1,8 @@
 //main.dart
 
 import 'package:flutter/material.dart';
-import 'pages/landing_page.dart';
+import 'pages/signup_main.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const SignUpMain());
 }
