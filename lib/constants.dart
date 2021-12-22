@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const lightOrange = Color(0xfffbc02d);
 const darkOrange = Color(0xfff57f12);
 const darkGrey = Color(0xff323232);
+const blackpurple = Color(0xff1a004b);
 const darkPurple = Color(0xff241e4e);
 const softerPurple = Color(0xff441f7e);
 const magenta = Color(0xffc90076);
