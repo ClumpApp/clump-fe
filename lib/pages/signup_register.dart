@@ -117,7 +117,7 @@ class SignUpPage extends StatelessWidget {
                       },
                       color: themeColor,
                       child: const Text(
-                        'SignUp',
+                        'Sign Up',
                         style: TextStyle(
                           fontSize: 16,
                           color: lightOrange,
