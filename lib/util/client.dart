@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:clump_initial/pages/signup_register.dart';
 import 'package:http/browser_client.dart';
 
 const _baseURL = 'https://clump-be.azurewebsites.net';
@@ -23,6 +24,20 @@ class Client {
       {required String username, required String password}) async {
     var response = await _client.post(Uri.parse(_baseURL + '/login'),
         body: {'UserName': username, 'Password': password}, headers: headers);
+
+    if (response.statusCode != 200) {
+      return false;
+    }
+
+    _saveToken(response.body);
+    return true;
+  }
+
+  Future<bool> signup(
+      {required String username, required String password}) async {
+    var response = await _client.post(Uri.parse(_baseURL + '/signup/register'),
+        body: {'UserName': username, 'Password': password, 'Email': email},
+        headers: headers);
 
     if (response.statusCode != 200) {
       return false;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../util/client.dart';
 import 'home_page.dart';
+import 'signup_register.dart';
 import '../constants.dart';
 
 String username = '';
@@ -29,14 +30,14 @@ class LoginPage extends StatelessWidget {
         ),
       ),
       child: Container(
-        padding: EdgeInsets.only(left: screenSize.width * 0.5),
+        padding: EdgeInsets.only(left: screenSize.width * 0.4),
         child: Center(
           child: Card(
             elevation: 0,
             color: Colors.transparent,
             child: Container(
               padding: EdgeInsets.only(
-                  left: screenSize.width / 15, right: screenSize.width / 15),
+                  left: screenSize.width / 12, right: screenSize.width / 12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -114,7 +115,11 @@ class LoginPage extends StatelessWidget {
                   Container(
                     child: MaterialButton(
                       onPressed: () {
-                        //Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage))
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpPage()),
+                        );
                       },
                       elevation: 0,
                       color: Colors.transparent,

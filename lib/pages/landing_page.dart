@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
+import 'signup_register.dart';
 import '../constants.dart';
 
 class MyApp extends StatelessWidget {
@@ -73,7 +74,7 @@ class LandingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    MaterialPageRoute(builder: (context) => const SignUpPage()),
                   );
                 },
                 color: blackpurple,
