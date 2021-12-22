@@ -24,7 +24,7 @@ class SignUpMain extends StatelessWidget {
         Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/clump_empty.png"),
+          image: AssetImage("assets/images/backgrounds/Clump BG_interests.png"),
           fit: BoxFit.cover,
         ),
       ),
