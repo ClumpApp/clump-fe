@@ -37,6 +37,8 @@ class SignUpPage extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       labelText: 'E-mail',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.mail),
@@ -52,6 +54,8 @@ class SignUpPage extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                     obscureText: true,
                     decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       labelText: 'Username',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.person),
@@ -67,6 +71,8 @@ class SignUpPage extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       labelText: 'Password',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.lock),

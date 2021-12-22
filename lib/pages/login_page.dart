@@ -44,6 +44,8 @@ class LoginPage extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       labelText: 'Username',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.person),
@@ -58,7 +60,10 @@ class LoginPage extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
+                    
                     decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       labelText: 'Password',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.lock),
