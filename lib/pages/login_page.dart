@@ -119,7 +119,7 @@ class LoginPage extends StatelessWidget {
                       elevation: 0,
                       color: Colors.transparent,
                       child: const Text(
-                        'Not Signed Up yet? Register Now!',
+                        'Not signed up yet? Register Now!',
                         style: TextStyle(
                           fontSize: 16,
                           color: themeColor,
