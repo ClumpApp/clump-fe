@@ -60,7 +60,6 @@ class LoginPage extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    
                     decoration: const InputDecoration(
                       fillColor: infoBoxColor,
                       filled: true,
@@ -87,6 +86,12 @@ class LoginPage extends StatelessWidget {
                     ),
                     child: MaterialButton(
                       onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                        );
+                        /*
                         Client.instance
                             .login(username: username, password: password)
                             .then((success) => {
@@ -101,11 +106,18 @@ class LoginPage extends StatelessWidget {
                                     }
                                   else
                                     {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage()),
+                                      ),
+
                                       // TODO Show failed login
                                       failedLogin = true
                                       //reshow the same page but have a notif that its wrong?
                                     }
-                                });
+                                });*/
                       },
                       color: themeColor,
                       child: const Text(
