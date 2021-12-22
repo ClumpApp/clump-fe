@@ -26,7 +26,7 @@ class LandingPage extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/clump_title.png"),
+          image: AssetImage("assets/images/backgrounds/Clump BG_title.png"),
           fit: BoxFit.cover,
         ),
       ),

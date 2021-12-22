@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
         Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/clump_empty.png"),
+          image: AssetImage("assets/images/backgrounds/Clump BG_empty.png.png"),
           fit: BoxFit.cover,
         ),
       ),
@@ -60,7 +60,6 @@ class LoginPage extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    
                     decoration: const InputDecoration(
                       fillColor: infoBoxColor,
                       filled: true,
