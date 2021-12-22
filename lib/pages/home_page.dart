@@ -5,6 +5,8 @@ import '../group/message_details.dart';
 import '../util/client.dart';
 import '../constants.dart';
 
+enum FileOptions { photo, video, voiceRecording, document }
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -40,55 +42,67 @@ class HomePage extends StatelessWidget {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.25,
-                      decoration: BoxDecoration(color: Colors.greenAccent),
+                      decoration:
+                          const BoxDecoration(color: Colors.greenAccent),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                        padding: const EdgeInsets.only(
+                            left: 10, bottom: 10, top: 10),
                         height: 60,
                         width: double.infinity,
-                        color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         child: Row(
                           children: <Widget>[
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.lightBlue,
-                                  borderRadius: BorderRadius.circular(30),
+                            PopupMenuButton<FileOptions>(
+                              onSelected: (FileOptions result) {},
+                              icon: const Icon(Icons.add),
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry<FileOptions>>[
+                                const PopupMenuItem<FileOptions>(
+                                  value: FileOptions.photo,
+                                  child: Icon(Icons.insert_photo),
                                 ),
-                                child: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                  size: 20,
+                                const PopupMenuItem<FileOptions>(
+                                  value: FileOptions.video,
+                                  child: Icon(Icons.videocam),
                                 ),
-                              ),
+                                const PopupMenuItem<FileOptions>(
+                                  value: FileOptions.voiceRecording,
+                                  child: Icon(Icons.keyboard_voice),
+                                ),
+                                const PopupMenuItem<FileOptions>(
+                                  value: FileOptions.document,
+                                  child: Icon(Icons.insert_drive_file),
+                                ),
+                              ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Expanded(
+                            const Expanded(
                               child: TextField(
                                 decoration: InputDecoration(
-                                    hintText: "Write message...",
+                                    hintText: "Message",
                                     hintStyle: TextStyle(color: Colors.black54),
                                     border: InputBorder.none),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             FloatingActionButton(
                               onPressed: () {},
-                              child: Icon(
+                              child: const Icon(
                                 Icons.send,
                                 color: Colors.white,
                                 size: 18,
                               ),
-                              backgroundColor: Colors.blue,
+                              backgroundColor: themeColor,
                               elevation: 0,
                             ),
                           ],
