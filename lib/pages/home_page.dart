@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           children: <Widget>[
@@ -117,20 +117,20 @@ class HomePage extends StatelessWidget {
               flex: 2,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: BoxDecoration(color: Colors.blue),
+                decoration: const BoxDecoration(color: Colors.blue),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
                         radius: ((MediaQuery.of(context).size.width) * 0.05),
                       ),
-                      Text('Abdullah Coşgun'),
+                      const Text('Abdullah Coşgun'),
                       MaterialButton(
                         onPressed: () => Client.instance
                             .get(endpoint: '/users')
                             .then((value) => print(value)),
                       ),
-                      Card(),
+                      const Card(),
                     ]),
               ),
             ),
