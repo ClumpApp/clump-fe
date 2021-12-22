@@ -9,6 +9,7 @@ const darkPurple = Color(0xff241e4e);
 const softerPurple = Color(0xff441f7e);
 const magenta = Color(0xffc90076);
 const turquoise = Color(0xff067084);
+const yellowish = Color(0xffffffff);
 
 //color places
 const notifTextColor = darkOrange;
@@ -17,3 +18,4 @@ const headerTextColor = softerPurple;
 const backgroundColor = darkGrey;
 const tagTextColor = magenta;
 const themeColor = darkPurple;
+const infoBoxColor = yellowish;
