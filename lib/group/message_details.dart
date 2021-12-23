@@ -75,7 +75,7 @@ class Message {
   //final video video_message;
   final bool isActive;
 
-  Message({
+   Message({
     this.user_name = '',
     this.text_message = '',
     this.last_seen = '',

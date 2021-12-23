@@ -6,9 +6,15 @@ import '../util/client.dart';
 import '../constants.dart';
 import '../page_contents/selectable_items.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String newMessage = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +75,12 @@ class HomePage extends StatelessWidget {
                             const SizedBox(
                               width: 15,
                             ),
-                            const Expanded(
+                             Expanded(
                               child: TextField(
-                                decoration: InputDecoration(
+                                onChanged: (str) {
+                                  newMessage = str;
+                                },
+                                decoration: const InputDecoration(
                                     hintText: "Message",
                                     hintStyle: TextStyle(color: Colors.black54),
                                     border: InputBorder.none),
@@ -81,7 +90,19 @@ class HomePage extends StatelessWidget {
                               width: 15,
                             ),
                             FloatingActionButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Message testMessage = Message(
+                                  user_name: "Lol User",
+                                  text_message:
+                                      "Hi guys, how are you doing lately?",
+                                  last_seen: "show_last_active",
+                                  isActive: false,
+                                );
+                                sampleMessages.add(testMessage);
+                                print(sampleMessages.length);
+                                print(newMessage);
+                                //sampleMessages.add()
+                              },
                               child: const Icon(
                                 Icons.send,
                                 color: Colors.white,
@@ -137,19 +158,19 @@ class HomePage extends StatelessWidget {
       );
 
   selectedType(BuildContext context, SelectableItem item) {
-    switch(item){
+    switch (item) {
       case popUpItems.photo:
-      print("photo action");
-      break;
+        print("photo action");
+        break;
       case popUpItems.video:
-      print("video action");
-      break;
+        print("video action");
+        break;
       case popUpItems.recording:
-      print("recording action");
-      break;
+        print("recording action");
+        break;
       case popUpItems.document:
-      print("file action");
-      break;
+        print("file action");
+        break;
     }
   }
 }
