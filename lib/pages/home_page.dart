@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import '../group/message_details.dart';
 import '../util/client.dart';
 import '../constants.dart';
-
-enum FileOptions { photo, video, voiceRecording, document }
+import '../page_contents/selectable_items.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class HomePage extends StatelessWidget {
               flex: 1,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: BoxDecoration(color: Colors.greenAccent),
+                decoration: const BoxDecoration(color: Colors.yellow),
                 child: Column(),
               ),
             ),
@@ -28,7 +27,7 @@ class HomePage extends StatelessWidget {
               flex: 7,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: BoxDecoration(color: Colors.yellow),
+                decoration: const BoxDecoration(color: Colors.yellow),
                 child: Column(
                   children: [
                     Expanded(
@@ -58,27 +57,10 @@ class HomePage extends StatelessWidget {
                         ),
                         child: Row(
                           children: <Widget>[
-                            PopupMenuButton<FileOptions>(
-                              onSelected: (FileOptions result) {},
+                            PopupMenuButton<SelectableItem>(
                               icon: const Icon(Icons.add),
-                              itemBuilder: (BuildContext context) =>
-                                  <PopupMenuEntry<FileOptions>>[
-                                const PopupMenuItem<FileOptions>(
-                                  value: FileOptions.photo,
-                                  child: Icon(Icons.insert_photo),
-                                ),
-                                const PopupMenuItem<FileOptions>(
-                                  value: FileOptions.video,
-                                  child: Icon(Icons.videocam),
-                                ),
-                                const PopupMenuItem<FileOptions>(
-                                  value: FileOptions.voiceRecording,
-                                  child: Icon(Icons.keyboard_voice),
-                                ),
-                                const PopupMenuItem<FileOptions>(
-                                  value: FileOptions.document,
-                                  child: Icon(Icons.insert_drive_file),
-                                ),
+                              itemBuilder: (context) => [
+                                ...popUpItems.popupContents.map(buildItem).toList(),
                               ],
                             ),
                             const SizedBox(
@@ -139,4 +121,13 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  PopupMenuItem<SelectableItem> buildItem(SelectableItem item) => PopupMenuItem(
+        child: Row(
+          children: [
+            Icon(item.icon, color: Colors.black),
+            Text(item.text),
+          ],
+        ),
+      );
 }
