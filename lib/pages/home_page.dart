@@ -59,8 +59,11 @@ class HomePage extends StatelessWidget {
                           children: <Widget>[
                             PopupMenuButton<SelectableItem>(
                               icon: const Icon(Icons.add),
+                              onSelected: (item) => selectedType(context, item),
                               itemBuilder: (context) => [
-                                ...popUpItems.popupContents.map(buildItem).toList(),
+                                ...popUpItems.popupContents
+                                    .map(buildItem)
+                                    .toList(),
                               ],
                             ),
                             const SizedBox(
@@ -122,7 +125,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  PopupMenuItem<SelectableItem> buildItem(SelectableItem item) => PopupMenuItem(
+  PopupMenuItem<SelectableItem> buildItem(SelectableItem item) =>
+      PopupMenuItem<SelectableItem>(
+        value: item,
         child: Row(
           children: [
             Icon(item.icon, color: Colors.black),
@@ -130,4 +135,21 @@ class HomePage extends StatelessWidget {
           ],
         ),
       );
+
+  selectedType(BuildContext context, SelectableItem item) {
+    switch(item){
+      case popUpItems.photo:
+      print("photo action");
+      break;
+      case popUpItems.video:
+      print("video action");
+      break;
+      case popUpItems.recording:
+      print("recording action");
+      break;
+      case popUpItems.document:
+      print("file action");
+      break;
+    }
+  }
 }
