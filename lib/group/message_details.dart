@@ -14,10 +14,10 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: press,
-      hoverColor: Colors.black,
-      focusColor: Colors.black,
-      splashColor: Colors.black,
-      highlightColor: Colors.black,
+      hoverColor: Colors.white,
+      focusColor: Colors.white,
+      splashColor: Colors.white,
+      highlightColor: Colors.white,
       child: Padding(
         padding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 20 * 0.75),
