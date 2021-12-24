@@ -97,7 +97,10 @@ class SignUpPage extends StatelessWidget {
                     child: MaterialButton(
                       onPressed: () {
                         Client.instance
-                            .signup(username: username, password: password)
+                            .signup(
+                                email: email,
+                                username: username,
+                                password: password)
                             .then((success) => {
                                   if (success)
                                     {
