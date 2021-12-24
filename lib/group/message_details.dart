@@ -48,6 +48,7 @@ class MessageBubble extends StatelessWidget {
                       opacity: 1,
                       child: Text(
                         message.message_string,
+                        style: const TextStyle(color: Colors.white),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

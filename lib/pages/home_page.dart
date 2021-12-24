@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
               flex: 1,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: Colors.yellow),
+                decoration: const BoxDecoration(color: themeColor),
                 child: Column(),
               ),
             ),
