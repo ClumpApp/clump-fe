@@ -70,7 +70,7 @@ class Client {
 
   Future<bool> post({required String data, required String endpoint}) async {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
-        body: jsonEncode(data));
+        body: data);
 
     if (response.statusCode != 201) {
       return false;
