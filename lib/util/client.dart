@@ -68,8 +68,7 @@ class Client {
     return jsonDecode(response.body);
   }
 
-  Future<bool> post(
-      {required Map<String, dynamic> data, required String endpoint}) async {
+  Future<bool> post({required String data, required String endpoint}) async {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
         body: jsonEncode(data));
 
