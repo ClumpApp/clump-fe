@@ -67,4 +67,15 @@ class Client {
     }
     return jsonDecode(response.body);
   }
+
+  Future<bool> post(
+      {required Map<String, dynamic> data, required String endpoint}) async {
+    var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
+        body: data);
+
+    if (response.statusCode != 201) {
+      return false;
+    }
+    return true;
+  }
 }

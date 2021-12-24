@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               flex: 7,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: Colors.yellow),
+                decoration: const BoxDecoration(color: themeColor),
                 child: Column(
                   children: [
                     Expanded(
@@ -132,13 +132,15 @@ class _HomePageState extends State<HomePage> {
                             ),
                             FloatingActionButton(
                               onPressed: () {
-                                print(newMessage);
+                                var newMessageMap = {"message": newMessage};
+                                Client.instance.post(
+                                    data: newMessageMap, endpoint: '/messages');
                                 //sampleMessages.add()
                               },
                               child: const Icon(
                                 Icons.send,
                                 color: Colors.white,
-                                 size: 18,
+                                size: 18,
                               ),
                               backgroundColor: themeColor,
                               elevation: 0,
