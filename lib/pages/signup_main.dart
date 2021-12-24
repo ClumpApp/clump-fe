@@ -15,7 +15,7 @@ final List<String> interests = [
 ];
 //final List<bool> interestChecks = List.generate(interests.length, (_) => false);
 
-class MyApp extends StatelessWidget {
+class SignUpMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,18 +23,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SignUpMain(),
+      home: const SignUpMain_(),
     );
   }
 }
 
-class SignUpMain extends StatefulWidget {
-  const SignUpMain({Key? key}) : super(key: key);
+class SignUpMain_ extends StatefulWidget {
+  const SignUpMain_({Key? key}) : super(key: key);
   @override
   _SignUpMain createState() => _SignUpMain();
 }
 
-class _SignUpMain extends State<SignUpMain> {
+class _SignUpMain extends State<SignUpMain_> {
   List<Interest> ints = new List.empty(growable: true);
   bool selectAll = false;
   @override
