@@ -21,7 +21,7 @@ class SignUpMain extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const SignUpMain_(),
     );
@@ -143,16 +143,18 @@ class _SignUpMain extends State<SignUpMain_> {
               height: screenSize.width / 4,
               child: Stack(
                 children: [
-                  Positioned(
-                      child: Checkbox(
-                    value: ints[k].selected,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        if (!value!) selectAll = false;
-                        ints[k].selected = value;
-                      });
-                    },
-                  ))
+                  Positioned.fill(
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Checkbox(
+                            value: ints[k].selected,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (!value!) selectAll = false;
+                                ints[k].selected = value;
+                              });
+                            },
+                          )))
                 ],
               ),
             ),
