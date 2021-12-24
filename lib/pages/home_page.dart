@@ -37,12 +37,21 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: sampleMessages.length,
-                        itemBuilder: (context, index) => MessageBubble(
-                          message: sampleMessages[index],
-                          press: () {},
-                        ),
+                      child: FutureBuilder(
+                        future: Client.instance.getAll(endpoint: ""),
+                        builder: (context, AsyncSnapshot<List> snapshot) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              var m = Message.fromJson(snapshot.data![i]);
+                              return MessageBubble(
+                                message: m,
+                                press: () {},
+                              );
+                            },
+                          );
+                        },
+                        initialData: const [],
                       ),
                     ),
                     Container(
@@ -55,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         padding: const EdgeInsets.only(
                             left: 10, bottom: 10, top: 10),
-                        height: 60,
+                        height: 55,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -75,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               width: 15,
                             ),
-                             Expanded(
+                            Expanded(
                               child: TextField(
                                 onChanged: (str) {
                                   newMessage = str;
@@ -91,15 +100,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                             FloatingActionButton(
                               onPressed: () {
-                                Message testMessage = Message(
-                                  user_name: "Lol User",
-                                  text_message:
-                                      "Hi guys, how are you doing lately?",
-                                  last_seen: "show_last_active",
-                                  isActive: false,
-                                );
-                                sampleMessages.add(testMessage);
-                                print(sampleMessages.length);
                                 print(newMessage);
                                 //sampleMessages.add()
                               },

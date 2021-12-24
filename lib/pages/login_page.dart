@@ -1,3 +1,4 @@
+import 'package:clump_initial/group/message_details.dart';
 import 'package:flutter/material.dart';
 import '../util/client.dart';
 import 'home_page.dart';
@@ -86,38 +87,29 @@ class LoginPage extends StatelessWidget {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                        );
-                        /*
-                        Client.instance
-                            .login(username: username, password: password)
-                            .then((success) => {
-                                  if (success)
-                                    {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomePage()),
-                                      )
-                                    }
-                                  else
-                                    {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomePage()),
-                                      ),
-
-                                      // TODO Show failed login
-                                      failedLogin = true
-                                      //reshow the same page but have a notif that its wrong?
-                                    }
-                                });*/
+                        if (username == '' || password == '') {
+                          print("Empty boxes");
+                        } else {
+                          Client.instance
+                              .login(username: username, password: password)
+                              .then((success) => {
+                                    if (success)
+                                      {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomePage()),
+                                        )
+                                      }
+                                    else
+                                      {
+                                        // TODO Show failed login
+                                        print("failed log")
+                                        // reshow the same page but have a notif that its wrong?
+                                      }
+                                  });
+                        }
                       },
                       color: themeColor,
                       child: const Text(

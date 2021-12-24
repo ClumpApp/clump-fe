@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
@@ -47,7 +48,7 @@ class MessageBubble extends StatelessWidget {
                     Opacity(
                       opacity: 1,
                       child: Text(
-                        message.text_message,
+                        message.message_string,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -55,10 +56,6 @@ class MessageBubble extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            Opacity(
-              opacity: 1,
-              child: Text(message.last_seen),
             ),
           ],
         ),
@@ -68,141 +65,36 @@ class MessageBubble extends StatelessWidget {
 }
 
 class Message {
-  final String user_name, text_message, last_seen;
-  //final Uri linkMessage;
-  //final recording audio_message;
+  //final Uuid uuid;
+  final String user_name;
+  final int message_type;
+  final String message_string;
+  final String send_time;
+
   //final image image_message;
   //final video video_message;
-  final bool isActive;
 
-   Message({
-    this.user_name = '',
-    this.text_message = '',
-    this.last_seen = '',
-    this.isActive = false,
+  Message({
+    //required this.uuid,
+    required this.user_name,
+    required this.message_type,
+    required this.message_string,
+    required this.send_time,
   });
-}
 
-List sampleMessages = [
-  Message(
-    user_name: "Abdullah Coşgun",
-    text_message: "Hi guys, how are you doing lately?",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Emre Duzakin",
-    text_message:
-        "Hello Abdullah! I am doing fantastic. What a beautiful morning to wake up!",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Serra Doganata",
-    text_message: "Me too! I haven't felt this good in a long time!",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Abdullah Coşgun",
-    text_message: "I am glad you guys are ok, but I am feeling a bit down :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-  Message(
-    user_name: "Test User",
-    text_message: "Wish you all the best :(",
-    last_seen: "show_last_active",
-    isActive: false,
-  ),
-];
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+        //uuid: json['uuid'],
+        user_name: json['username'],
+        message_type: json['type'],
+        message_string: json['messagestr'],
+        send_time: json['date']);
+  }
+  Map toJson() => {
+        //'uuid': uuid,
+        'username': user_name,
+        'type': message_type,
+        'messagestr': message_string,
+        'date': send_time,
+      };
+}
