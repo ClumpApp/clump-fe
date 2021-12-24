@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String newMessage = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,21 +38,52 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: FutureBuilder(
-                        future: Client.instance.getAll(endpoint: ""),
-                        builder: (context, AsyncSnapshot<List> snapshot) {
-                          return ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int i) {
-                              var m = Message.fromJson(snapshot.data![i]);
-                              return MessageBubble(
-                                message: m,
-                                press: () {},
-                              );
-                            },
+                      child: FutureBuilder<List<dynamic>>(
+                        future:
+                            //_calculation,
+                            Client.instance.getAll(endpoint: "/messages"),
+                        builder: (context, snapshot) {
+                          List<Widget> children;
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (BuildContext context, int i) {
+                                  var m = Message.fromJson(snapshot.data![i]);
+                                  return MessageBubble(
+                                      message: m, press: () => {});
+                                });
+                          } else if (snapshot.hasError) {
+                            children = <Widget>[
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.red,
+                                size: 60,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Text('Error: ${snapshot.error}'),
+                              )
+                            ];
+                          } else {
+                            children = const <Widget>[
+                              SizedBox(
+                                width: 60,
+                                height: 60,
+                                child: CircularProgressIndicator(),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 16),
+                                child: Text('Awaiting result...'),
+                              )
+                            ];
+                          }
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: children,
+                            ),
                           );
                         },
-                        initialData: const [],
                       ),
                     ),
                     Container(

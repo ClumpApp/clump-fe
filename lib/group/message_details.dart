@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
@@ -65,17 +64,17 @@ class MessageBubble extends StatelessWidget {
 }
 
 class Message {
-  //final Uuid uuid;
+  final String uuid;
   final String user_name;
   final int message_type;
   final String message_string;
-  final String send_time;
+  final DateTime send_time;
 
   //final image image_message;
   //final video video_message;
 
   Message({
-    //required this.uuid,
+    required this.uuid,
     required this.user_name,
     required this.message_type,
     required this.message_string,
@@ -84,14 +83,15 @@ class Message {
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
-        //uuid: json['uuid'],
+        uuid: json['uuid'],
         user_name: json['username'],
         message_type: json['type'],
         message_string: json['messagestr'],
         send_time: json['date']);
   }
+
   Map toJson() => {
-        //'uuid': uuid,
+        'uuid': uuid,
         'username': user_name,
         'type': message_type,
         'messagestr': message_string,
