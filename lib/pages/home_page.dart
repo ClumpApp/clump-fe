@@ -132,9 +132,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             FloatingActionButton(
                               onPressed: () {
-                                //var newMessageMap = {"message": newMessage};
+                                var newMessageMap = {"message": newMessage};
                                 Client.instance.post(
-                                    data: newMessage, endpoint: '/messages');
+                                    data: newMessageMap, endpoint: '/messages');
                                 //sampleMessages.add()
                               },
                               child: const Icon(
