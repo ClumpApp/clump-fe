@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String newMessage = "";
+  Future<Map<String, dynamic>> myUserName =
+      Client.instance.get(endpoint: '/users/me');
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +166,15 @@ class _HomePageState extends State<HomePage> {
                       CircleAvatar(
                         radius: ((MediaQuery.of(context).size.width) * 0.05),
                       ),
-                      const Text('Abdullah Coşgun'),
+                      FutureBuilder<Map>(
+                        future: myUserName,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(snapshot.data!['UserName']);
+                          }
+                          return const Text('Loading...');
+                        },
+                      ),
                       MaterialButton(
                         onPressed: () => Client.instance
                             .get(endpoint: '/users')
