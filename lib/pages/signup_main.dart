@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'signup_sub.dart';
 
-String username = '';
-String password = '';
-bool failedLogin = false;
-
 final List<String> interests = [
   "sports",
   "tv",
