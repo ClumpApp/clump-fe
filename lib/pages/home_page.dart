@@ -17,6 +17,56 @@ class _HomePageState extends State<HomePage> {
   String newMessage = "";
   Future<Map<String, dynamic>> myUserName =
       Client.instance.get(endpoint: '/users/me');
+  Future<void> refreshMessages() async {
+    setState(() {
+      FutureBuilder<List<dynamic>>(
+        future:
+            //_calculation,
+            Client.instance.getAll(endpoint: "/messages"),
+        builder: (context, snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (BuildContext context, int i) {
+                  var m = Message.fromJson(snapshot.data![i]);
+                  return MessageBubble(message: m, press: () => {});
+                });
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,53 +90,56 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: FutureBuilder<List<dynamic>>(
-                        future:
-                            //_calculation,
-                            Client.instance.getAll(endpoint: "/messages"),
-                        builder: (context, snapshot) {
-                          List<Widget> children;
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (BuildContext context, int i) {
-                                  var m = Message.fromJson(snapshot.data![i]);
-                                  return MessageBubble(
-                                      message: m, press: () => {});
-                                });
-                          } else if (snapshot.hasError) {
-                            children = <Widget>[
-                              const Icon(
-                                Icons.error_outline,
-                                color: Colors.red,
-                                size: 60,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16),
-                                child: Text('Error: ${snapshot.error}'),
-                              )
-                            ];
-                          } else {
-                            children = const <Widget>[
-                              SizedBox(
-                                width: 60,
-                                height: 60,
-                                child: CircularProgressIndicator(),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 16),
-                                child: Text('Awaiting result...'),
-                              )
-                            ];
-                          }
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: children,
-                            ),
-                          );
-                        },
-                      ),
+                      child: RefreshIndicator(
+                          child: FutureBuilder<List<dynamic>>(
+                            future:
+                                //_calculation,
+                                Client.instance.getAll(endpoint: "/messages"),
+                            builder: (context, snapshot) {
+                              List<Widget> children;
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      var m =
+                                          Message.fromJson(snapshot.data![i]);
+                                      return MessageBubble(
+                                          message: m, press: () => {});
+                                    });
+                              } else if (snapshot.hasError) {
+                                children = <Widget>[
+                                  const Icon(
+                                    Icons.error_outline,
+                                    color: Colors.red,
+                                    size: 60,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16),
+                                    child: Text('Error: ${snapshot.error}'),
+                                  )
+                                ];
+                              } else {
+                                children = const <Widget>[
+                                  SizedBox(
+                                    width: 60,
+                                    height: 60,
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 16),
+                                    child: Text('Awaiting result...'),
+                                  )
+                                ];
+                              }
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: children,
+                                ),
+                              );
+                            },
+                          ),
+                          onRefresh: refreshMessages),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.25,
