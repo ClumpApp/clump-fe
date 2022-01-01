@@ -96,24 +96,25 @@ class SignUpPage extends StatelessWidget {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        Client.instance
-                            .signup(username: username, password: password)
+                        /*Client.instance
+                            .signup(
+                                email: email,
+                                username: username,
+                                password: password)
                             .then((success) => {
                                   if (success)
-                                    {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SignUpMain()),
-                                      )
-                                    }
+                                    {*/
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpMain()),
+                        );
+                        /*}
                                   else
                                     {
                                       // TODO Show failed signup
                                       failedSignUp = true
                                     }
-                                });
+                                });*/
                       },
                       color: themeColor,
                       child: const Text(

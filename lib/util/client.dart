@@ -35,7 +35,9 @@ class Client {
   }
 
   Future<bool> signup(
-      {required String username, required String password}) async {
+      {required String email,
+      required String username,
+      required String password}) async {
     var response = await _client.post(Uri.parse(_baseURL + '/signup/register'),
         body: {'UserName': username, 'Password': password, 'Email': email},
         headers: headers);
