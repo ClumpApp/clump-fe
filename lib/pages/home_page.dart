@@ -99,10 +99,9 @@ class _HomePageState extends State<HomePage> {
                               List<Widget> children;
                               if (snapshot.hasData) {
                                 return ListView.builder(
-                                    itemCount: snapshot.data!.length,
+                                    itemCount: dummyMessageList.length,
                                     itemBuilder: (BuildContext context, int i) {
-                                      var m =
-                                          Message.fromJson(snapshot.data![i]);
+                                      var m = dummyMessageList[i];
                                       return MessageBubble(
                                           message: m, press: () => {});
                                     });
@@ -187,10 +186,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                             FloatingActionButton(
                               onPressed: () {
-                                var newMessageMap = {"message": newMessage};
+                                if (newMessage != null) {
+                                  Message mesToList = Message(
+                                      uuid: "my message uuid",
+                                      user_name: "demo user",
+                                      message_type: 1,
+                                      message_string: newMessage,
+                                      send_time: DateTime.now());
+                                  /*
                                 Client.instance.post(
                                     data: newMessageMap, endpoint: '/messages');
-                                //sampleMessages.add()
+                                    */
+                                  setState(() {
+                                    dummyMessageList.add(mesToList);
+                                  });
+                                }
                               },
                               child: const Icon(
                                 Icons.send,

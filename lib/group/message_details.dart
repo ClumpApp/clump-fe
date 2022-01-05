@@ -90,7 +90,7 @@ class Message {
         user_name: json['username'],
         message_type: json['type'],
         message_string: json['messagestr'],
-        send_time: json['date']);
+        send_time: DateTime.parse(json['date']));
   }
 
   Map toJson() => {
@@ -101,3 +101,45 @@ class Message {
         'date': send_time,
       };
 }
+
+//Everything below this line is added for testing, will be removed before commiting to main
+
+final testJson = '[{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"}, {"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"}]';
+
+List<Message> dummyMessageList = [
+  Message(
+      uuid: "my message uuid",
+      user_name: "1 username",
+      message_type: 1,
+      message_string: "1 message string",
+      send_time: DateTime.now()
+  ),
+  Message(
+      uuid: "my message uuid",
+      user_name: "2 username",
+      message_type: 1,
+      message_string: "2 message string",
+      send_time: DateTime.now()
+  ),
+  Message(
+      uuid: "my message uuid",
+      user_name: "3 username",
+      message_type: 1,
+      message_string: "3 message string",
+      send_time: DateTime.now()
+  ),
+  Message(
+      uuid: "my message uuid",
+      user_name: "4 username",
+      message_type: 1,
+      message_string: "4 message string",
+      send_time: DateTime.now()
+  ),
+  Message(
+      uuid: "my message uuid",
+      user_name: "5 username",
+      message_type: 1,
+      message_string: "5 message string",
+      send_time: DateTime.now()
+  ),
+];

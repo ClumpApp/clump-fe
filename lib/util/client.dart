@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import '../pages/signup_register.dart';
 import 'package:http/browser_client.dart';
+import '../group/message_details.dart';
 
 const _baseURL = 'https://clump-be.azurewebsites.net';
 const _baseAPI = '/api/v1';
@@ -23,6 +24,9 @@ class Client {
 
   Future<bool> login(
       {required String username, required String password}) async {
+        //Bypassed for ease of testing 
+
+        /*
     var response = await _client.post(Uri.parse(_baseURL + '/login'),
         body: {'UserName': username, 'Password': password}, headers: headers);
 
@@ -31,13 +35,16 @@ class Client {
     }
 
     _saveToken(response.body);
+    */
     return true;
+    
   }
 
   Future<bool> signup(
       {required String email,
       required String username,
       required String password}) async {
+        /*
     var response = await _client.post(Uri.parse(_baseURL + '/signup/register'),
         body: {'UserName': username, 'Password': password, 'Email': email},
         headers: headers);
@@ -47,6 +54,7 @@ class Client {
     }
 
     _saveToken(response.body);
+    */
     return true;
   }
 
@@ -61,6 +69,8 @@ class Client {
   }
 
   Future<List<dynamic>> getAll({required String endpoint}) async {
+    //Bypassed for ease of testing 
+    /*
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
@@ -68,6 +78,8 @@ class Client {
       throw Exception("Error while fetching data");
     }
     return jsonDecode(response.body);
+    */
+    return jsonDecode(testJson);
   }
 
   Future<bool> post(
