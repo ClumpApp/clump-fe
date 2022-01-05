@@ -7,7 +7,6 @@ import '../constants.dart';
 String username = '';
 String password = '';
 String email = '';
-bool failedSignUp = false;
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key); //, required String title
@@ -96,25 +95,25 @@ class SignUpPage extends StatelessWidget {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        /*Client.instance
+                        Client.instance
                             .signup(
                                 email: email,
                                 username: username,
                                 password: password)
-                            .then((success) => {
-                                  if (success)
-                                    {*/
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUpMain()),
-                        );
-                        /*}
+                            .then((value) => {
+                                  if (value)
+                                    {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SignUpMain()),
+                                      )
+                                    }
                                   else
                                     {
                                       // TODO Show failed signup
-                                      failedSignUp = true
                                     }
-                                });*/
+                                });
                       },
                       color: themeColor,
                       child: const Text(

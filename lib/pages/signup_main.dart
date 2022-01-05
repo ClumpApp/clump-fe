@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'signup_sub.dart';
+import '../util/client.dart';
 
-final List<String> interests = [
-  "sports",
-  "tv",
-  "movies",
-  "books",
-  "music",
-  "science",
-  "art",
-  "comic",
-  "anime"
-];
-//final List<bool> interestChecks = List.generate(interests.length, (_) => false);
+class Interest {
+  final String uuid;
+  final String title;
+  final String picture;
+  bool selected;
+
+  Interest({
+    required this.uuid,
+    required this.title,
+    required this.picture,
+    this.selected = false,
+  });
+
+  factory Interest.fromJson(Map<String, dynamic> json) {
+    return Interest(
+        uuid: json['uuid'], title: json['title'], picture: json['picture']);
+  }
+
+  Map<String, dynamic> toJson() => {
+        'uuid': uuid,
+        'title': title,
+        'picture': picture,
+      };
+}
+
+List<Interest> interestList = [];
 
 class SignUpMain extends StatelessWidget {
   @override
@@ -35,16 +50,6 @@ class SignUpMain_ extends StatefulWidget {
 }
 
 class _SignUpMain extends State<SignUpMain_> {
-  List<Interest> ints = new List.empty(growable: true);
-  bool selectAll = false;
-  @override
-  void initState() {
-    super.initState();
-    for (String interest in interests) {
-      ints.add(Interest(interest, false));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -80,37 +85,56 @@ class _SignUpMain extends State<SignUpMain_> {
                     //        });
                     //      });
                     //    }),
-                    GridView.builder(
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, index) {
-                        return prepareList(index, screenSize);
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4),
-                      itemCount: ints.length,
-                    ),
+                    FutureBuilder<List<Map<String, dynamic>>>(
+                        future: Client.instance.getAll(endpoint: "/interests"),
+                        builder: (contex, snapshot) {
+                          if (snapshot.hasData) {
+                            for (var interestjson in snapshot.data!) {
+                              interestList.add(Interest.fromJson(interestjson));
+                            }
+                            return GridView.builder(
+                              physics: const ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (ctx, index) {
+                                return prepareList(index, screenSize);
+                              },
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 4),
+                              itemCount: snapshot.data!.length,
+                            );
+                          } else {
+                            return const Text('Loading...');
+                          }
+                        })
                   ],
                 ),
-                Container(
-                  child: MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignUpSub()),
-                      );
-                    },
-                    elevation: 0,
-                    color: Colors.transparent,
-                    height: screenSize.height / 5,
-                    child: const Center(
-                      child: Text(
-                        'Cool!',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
+                MaterialButton(
+                  onPressed: () {
+                    saveInterests().then((value) => {
+                          if (value)
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignUpSub()),
+                              )
+                            }
+                          else
+                            {
+                              // There should not be such case
+                            }
+                        });
+                  },
+                  elevation: 0,
+                  color: Colors.transparent,
+                  height: screenSize.height / 5,
+                  child: const Center(
+                    child: Text(
+                      'Cool!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -134,8 +158,7 @@ class _SignUpMain extends State<SignUpMain_> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      "assets/images/icons/" + interests[k] + ".png"),
+                  image: NetworkImage(interestList[k].picture),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -147,11 +170,10 @@ class _SignUpMain extends State<SignUpMain_> {
                       child: Align(
                           alignment: Alignment.topCenter,
                           child: Checkbox(
-                            value: ints[k].selected,
+                            value: interestList[k].selected,
                             onChanged: (bool? value) {
                               setState(() {
-                                if (!value!) selectAll = false;
-                                ints[k].selected = value;
+                                interestList[k].selected = value!;
                               });
                             },
                           )))
@@ -165,8 +187,14 @@ class _SignUpMain extends State<SignUpMain_> {
   }
 }
 
-class Interest {
-  String name;
-  bool selected;
-  Interest(this.name, this.selected);
+Future<bool> saveInterests() async {
+  List<Map<String, dynamic>> selectedInterestList = [];
+  for (var interest in interestList) {
+    if (interest.selected) {
+      selectedInterestList.add(interest.toJson());
+    }
+  }
+  var res = await Client.instance
+      .postAll(data: selectedInterestList, endpoint: "/users/interests");
+  return res;
 }
