@@ -30,6 +30,25 @@ class Interest {
 
 List<Interest> interestList = [];
 
+Future<bool> getInterests() async {
+  var interests = await Client.instance.getAll(endpoint: "/interests");
+  for (var interestJSON in interests) {
+    interestList.add(Interest.fromJson(interestJSON));
+  }
+  return true;
+}
+
+Future<bool> saveInterests() async {
+  List<Map<String, dynamic>> selectedInterestList = [];
+  for (var interest in interestList) {
+    if (interest.selected) {
+      selectedInterestList.add(interest.toJson());
+    }
+  }
+  return Client.instance
+      .postAll(data: selectedInterestList, endpoint: "/users/interests");
+}
+
 class SignUpMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -50,6 +69,14 @@ class SignUpMain_ extends StatefulWidget {
 }
 
 class _SignUpMain extends State<SignUpMain_> {
+  @override
+  void initState() {
+    getInterests().then((value) => setState(() {
+          interestList;
+        }));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -75,38 +102,17 @@ class _SignUpMain extends State<SignUpMain_> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    //Checkbox(
-                    //    value: selectAll,
-                    //    onChanged: (bool? value) {
-                    //      setState(() {
-                    //        selectAll = value!;
-                    //        ints.forEach((element) {
-                    //          element.selected = value;
-                    //        });
-                    //      });
-                    //    }),
-                    FutureBuilder<List<Map<String, dynamic>>>(
-                        future: Client.instance.getAll(endpoint: "/interests"),
-                        builder: (contex, snapshot) {
-                          if (snapshot.hasData) {
-                            for (var interestjson in snapshot.data!) {
-                              interestList.add(Interest.fromJson(interestjson));
-                            }
-                            return GridView.builder(
-                              physics: const ScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (ctx, index) {
-                                return prepareList(index, screenSize);
-                              },
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4),
-                              itemCount: snapshot.data!.length,
-                            );
-                          } else {
-                            return const Text('Loading...');
-                          }
-                        })
+                    GridView.builder(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (ctx, index) {
+                        return prepareList(interestList[index], screenSize);
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4),
+                      itemCount: interestList.length,
+                    ),
                   ],
                 ),
                 MaterialButton(
@@ -144,12 +150,13 @@ class _SignUpMain extends State<SignUpMain_> {
     //})));
   }
 
-  Widget prepareList(int k, Size screenSize) {
+  Widget prepareList(Interest interest, Size screenSize) {
+    var tag = interest.title;
     return Card(
       color: Colors.transparent,
       elevation: 0,
       child: Hero(
-        tag: "text$k",
+        tag: "text$tag",
         child: Material(
           elevation: 0,
           color: Colors.transparent,
@@ -158,7 +165,7 @@ class _SignUpMain extends State<SignUpMain_> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(interestList[k].picture),
+                  image: NetworkImage(interest.picture),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -170,10 +177,10 @@ class _SignUpMain extends State<SignUpMain_> {
                       child: Align(
                           alignment: Alignment.topCenter,
                           child: Checkbox(
-                            value: interestList[k].selected,
+                            value: interest.selected,
                             onChanged: (bool? value) {
                               setState(() {
-                                interestList[k].selected = value!;
+                                interest.selected = value!;
                               });
                             },
                           )))
@@ -185,16 +192,4 @@ class _SignUpMain extends State<SignUpMain_> {
       ),
     );
   }
-}
-
-Future<bool> saveInterests() async {
-  List<Map<String, dynamic>> selectedInterestList = [];
-  for (var interest in interestList) {
-    if (interest.selected) {
-      selectedInterestList.add(interest.toJson());
-    }
-  }
-  var res = await Client.instance
-      .postAll(data: selectedInterestList, endpoint: "/users/interests");
-  return res;
 }

@@ -24,9 +24,6 @@ class Client {
 
   Future<bool> login(
       {required String username, required String password}) async {
-        //Bypassed for ease of testing 
-
-        /*
     var response = await _client.post(Uri.parse(_baseURL + '/account/login'),
         body: {'UserName': username, 'Password': password}, headers: headers);
 
@@ -35,16 +32,14 @@ class Client {
     }
 
     _saveToken(response.body);
-    */
+
     return true;
-    
   }
 
   Future<bool> signup(
       {required String email,
       required String username,
       required String password}) async {
-        
     var response = await _client.post(Uri.parse(_baseURL + '/account/signup'),
         body: {'Username': username, 'Password': password, 'Email': email},
         headers: headers);
@@ -54,7 +49,7 @@ class Client {
     }
 
     _saveToken(response.body);
-    
+
     return true;
   }
 
@@ -68,9 +63,7 @@ class Client {
     return jsonDecode(response.body);
   }
 
-  Future<List<Map<String, dynamic>>> getAll({required String endpoint}) async {
-    //Bypassed for ease of testing 
-    /*
+  Future<List<dynamic>> getAll({required String endpoint}) async {
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
@@ -78,12 +71,8 @@ class Client {
       throw Exception("Error while fetching data");
     }
     return jsonDecode(response.body);
-    */
-    return jsonDecode(testJson);
   }
 
-final testJson = '[{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"}, {"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"},{"uuid": "some_uuid", "username": "some_username", "type": 1, "messagestr": "my_message_str", "date": "2012-03-19T07:22Z"}]';
-  
   Future<bool> post(
       {required Map<String, dynamic> data, required String endpoint}) async {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
@@ -96,7 +85,8 @@ final testJson = '[{"uuid": "some_uuid", "username": "some_username", "type": 1,
   }
 
   Future<bool> postAll(
-      {required List<Map<String, dynamic>> data, required String endpoint}) async {
+      {required List<Map<String, dynamic>> data,
+      required String endpoint}) async {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
         body: data, headers: headers);
 

@@ -103,17 +103,13 @@ class Message {
       };
 }
 
+List<Message> messageList = [];
+
 Future<bool> getMessages() async {
   var messages = await Client.instance.getAll(endpoint: "/messages");
 
-  for (var messageJSON in messages){
-    var message = Message.fromJson(messageJSON);
-    messageList.add(message);
+  for (var messageJSON in messages) {
+    messageList.add(Message.fromJson(messageJSON));
   }
   return true;
 }
-//Everything below this line is added for testing, will be removed before commiting to main
-
-List<Message> messageList = [
- 
-];

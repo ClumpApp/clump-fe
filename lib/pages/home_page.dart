@@ -19,6 +19,14 @@ class _HomePageState extends State<HomePage> {
       Client.instance.get(endpoint: '/users/me');
 
   @override
+  void initState() {
+    getMessages().then((value) => setState(() {
+          messageList;
+        }));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -40,59 +48,17 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: FutureBuilder<bool>(
-                        future:
-                            //_calculation,
-                            getMessages(),
-                        builder: (context, snapshot) {
-                          List<Widget> children;
-                          if (snapshot.hasData) {
-                            return ListView.separated(
-                                itemCount: messageList.length,
-                                itemBuilder: (BuildContext context, int i) {
-                                  var m = messageList[i];
-                                  return MessageBubble(
-                                      message: m, press: () => {});
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        const Divider(
-                                          color: Colors.grey,
-                                        ));
-                          } else if (snapshot.hasError) {
-                            children = <Widget>[
-                              const Icon(
-                                Icons.error_outline,
-                                color: Colors.red,
-                                size: 60,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16),
-                                child: Text('Error: ${snapshot.error}'),
-                              )
-                            ];
-                          } else {
-                            children = const <Widget>[
-                              SizedBox(
-                                width: 60,
-                                height: 60,
-                                child: CircularProgressIndicator(),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 16),
-                                child: Text('Awaiting result...'),
-                              )
-                            ];
-                          }
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: children,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                        child: ListView.separated(
+                            itemCount: messageList.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              return MessageBubble(
+                                  message: messageList[i], press: () => {});
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(
+                                      color: Colors.grey,
+                                    ))),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.25,
                       decoration:
@@ -146,10 +112,12 @@ class _HomePageState extends State<HomePage> {
                                       message_type: 1,
                                       message_string: newMessage,
                                       send_time: DateTime.now());
-                                  /*
-                                Client.instance.post(
-                                    data: newMessageMap, endpoint: '/messages');
-                                    */
+                                  var newMessageMap = {"message": newMessage};
+
+                                  Client.instance.post(
+                                      data: newMessageMap,
+                                      endpoint: '/messages');
+
                                   setState(() {
                                     messageList.add(mesToList);
                                   });
