@@ -98,13 +98,17 @@ class _HomePageState extends State<HomePage> {
                             builder: (context, snapshot) {
                               List<Widget> children;
                               if (snapshot.hasData) {
-                                return ListView.builder(
+                                return ListView.separated(
                                     itemCount: dummyMessageList.length,
                                     itemBuilder: (BuildContext context, int i) {
                                       var m = dummyMessageList[i];
                                       return MessageBubble(
                                           message: m, press: () => {});
-                                    });
+                                    }, separatorBuilder: (BuildContext context, int index) => 
+                                    const Divider(
+                                      color: Colors.grey,
+                                    )
+                                    );
                               } else if (snapshot.hasError) {
                                 children = <Widget>[
                                   const Icon(
@@ -186,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             FloatingActionButton(
                               onPressed: () {
-                                if (newMessage != null) {
+                                if (newMessage != "") {
                                   Message mesToList = Message(
                                       uuid: "my message uuid",
                                       user_name: "demo user",
