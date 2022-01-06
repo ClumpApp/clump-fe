@@ -19,8 +19,11 @@ class Client {
     HttpHeaders.contentTypeHeader: ContentType.json.toString()
   };
 
+  String _token = '';
+
   void _saveToken(body) {
-    headers[HttpHeaders.authorizationHeader] = _authScheme + body;
+    _token = body;
+    headers[HttpHeaders.authorizationHeader] = _authScheme + _token;
   }
 
   Future<bool> login(
@@ -108,11 +111,7 @@ class Client {
   }
 
   String getWSAddress() {
-    return _baseWS +
-        _baseAPI +
-        "/ws/messages" +
-        "?token=" +
-        headers[HttpHeaders.authorizationHeader]!;
+    return _baseWS + _baseAPI + "/ws/messages" + "?token=" + _token;
   }
 }
 

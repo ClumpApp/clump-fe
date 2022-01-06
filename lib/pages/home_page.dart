@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     channel.stream.listen((event) {
       var newMessage = jsonDecode(event);
       messageList.add(Message.fromJson(newMessage));
+      _scrollController.jumpTo((_scrollController.position.maxScrollExtent));
       setState(() {
         messageList;
       });
@@ -116,23 +117,21 @@ class _HomePageState extends State<HomePage> {
                             FloatingActionButton(
                               onPressed: () {
                                 if (newMessage != "") {
-                                  Message mesToList = Message(
+                                  /*Message mesToList = Message(
                                       uuid: "my message uuid",
                                       user_name: "demo user",
                                       message_type: 1,
                                       message_string: newMessage,
-                                      send_time: DateTime.now());
+                                      send_time: DateTime.now());*/
                                   var newMessageMap = {"message": newMessage};
 
-                                  /*Client.instance.post(
+                                  Client.instance.post(
                                       data: newMessageMap,
-                                      endpoint: '/messages');*/
+                                      endpoint: '/messages');
                                   msgController.clear();
-                                  _scrollController.jumpTo((_scrollController
-                                      .position.maxScrollExtent));
-                                  setState(() {
+                                  /*setState(() {
                                     messageList.add(mesToList);
-                                  });
+                                  });*/
                                 }
                               },
                               child: const Icon(
