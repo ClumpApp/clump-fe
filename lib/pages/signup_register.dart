@@ -51,7 +51,7 @@ class SignUpPage extends StatelessWidget {
                   ),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    obscureText: true,
+                    obscureText: false,
                     decoration: const InputDecoration(
                       fillColor: infoBoxColor,
                       filled: true,
