@@ -56,8 +56,7 @@ class _HomePageState extends State<HomePage> {
                                     ))),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.25,
-                      decoration:
-                          const BoxDecoration(color: Colors.greenAccent),
+                      decoration: const BoxDecoration(color: darkOrange),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -68,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                         height: 55,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: darkGrey,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
@@ -95,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                                     contentPadding:
                                         const EdgeInsets.only(bottom: 15),
                                     hintText: "Message",
-                                    hintStyle: TextStyle(color: Colors.black54),
+                                    hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none),
                               ),
                             ),
@@ -117,7 +116,8 @@ class _HomePageState extends State<HomePage> {
                                       data: newMessageMap,
                                       endpoint: '/messages');*/
                                   msgController.clear();
-                                  _scrollController.jumpTo((_scrollController.position.maxScrollExtent));
+                                  _scrollController.jumpTo((_scrollController
+                                      .position.maxScrollExtent));
                                   setState(() {
                                     messageList.add(mesToList);
                                   });
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: const Icon(
                                 Icons.send,
-                                color: Colors.white,
+                                color: darkGrey,
                                 size: 18,
                               ),
                               backgroundColor: themeColor,
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               flex: 2,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: Colors.blue),
+                decoration: const BoxDecoration(color: turquoise),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
         value: item,
         child: Row(
           children: [
-            Icon(item.icon, color: Colors.black),
+            Icon(item.icon, color: Colors.grey),
             Text(item.text),
           ],
         ),
