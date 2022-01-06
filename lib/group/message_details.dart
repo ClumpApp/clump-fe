@@ -24,15 +24,7 @@ class MessageBubble extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 20, vertical: 20 * 0.75),
         child: Row(
           children: [
-            Stack(
-              children: const [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.grey,
-                  child: Icon(Icons.person, color: Colors.black),
-                ),
-              ],
-            ),
+            
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
