@@ -1,4 +1,4 @@
-import 'package:clump_initial/pages/login_page.dart';
+import '/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import '../util/client.dart';
 import 'signup_main.dart';

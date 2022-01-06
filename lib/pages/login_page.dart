@@ -1,4 +1,3 @@
-import 'package:clump_initial/group/message_details.dart';
 import 'package:flutter/material.dart';
 import '../util/client.dart';
 import 'home_page.dart';
