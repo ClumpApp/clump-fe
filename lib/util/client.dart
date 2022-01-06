@@ -16,7 +16,9 @@ class Client {
   static Client get instance => _instance;
 
   final BrowserClient _client = BrowserClient()..withCredentials = true;
-  Map<String, String> headers = {};
+  Map<String, String> headers = {
+    HttpHeaders.contentTypeHeader: ContentType.json.toString()
+  };
 
   void _saveToken(body) {
     headers[HttpHeaders.authorizationHeader] = _authScheme + body;
@@ -25,7 +27,8 @@ class Client {
   Future<bool> login(
       {required String username, required String password}) async {
     var response = await _client.post(Uri.parse(_baseURL + '/account/login'),
-        body: {'Username': username, 'Password': password}, headers: headers);
+        body: jsonEncode({'Username': username, 'Password': password}),
+        headers: headers);
 
     if (response.statusCode != 200) {
       return false;
@@ -41,7 +44,8 @@ class Client {
       required String username,
       required String password}) async {
     var response = await _client.post(Uri.parse(_baseURL + '/account/signup'),
-        body: {'Username': username, 'Password': password, 'Email': email},
+        body: jsonEncode(
+            {'Username': username, 'Password': password, 'Email': email}),
         headers: headers);
 
     if (response.statusCode != 200) {
@@ -97,6 +101,6 @@ class Client {
   }
 
   void resetClient() {
-    headers = {};
+    headers = {HttpHeaders.contentTypeHeader: ContentType.json.toString()};
   }
 }
