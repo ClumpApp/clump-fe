@@ -17,7 +17,7 @@ class SignUpPage extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/Clump BG_empty.png"),
+          image: AssetImage("media/Clump_BG_empty.png"),
           fit: BoxFit.cover,
         ),
       ),
