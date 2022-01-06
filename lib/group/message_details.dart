@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../util/client.dart';
 
+
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
     Key? key,
@@ -47,6 +48,11 @@ class MessageBubble extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
+                    ),
+                    Text(
+                      message.send_time.toString(),
+                      style: const TextStyle(color: Colors.cyan),
+                      textAlign: TextAlign.end,
                     ),
                   ],
                 ),

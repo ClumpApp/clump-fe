@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../group/message_details.dart';
+import '../group/user_details.dart';
 import '../util/client.dart';
 import '../constants.dart';
 import '../page_contents/selectable_items.dart';
@@ -26,6 +27,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     getMessages().then((value) => setState(() {
           messageList;
+        }));
+    getUserNames().then((value) => setState(() {
+          userList;
         }));
     var channel = WebSocketChannel.connect(
       Uri.parse(Client.instance.getWSAddress()),
@@ -55,18 +59,19 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Expanded(
-                        child: ListView.separated(
-                            controller: _scrollController,
-                            itemCount: messageList.length,
-                            itemBuilder: (BuildContext context, int i) {
-                              return MessageBubble(
-                                  message: messageList[i], press: () => {});
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    const Divider(
-                                      color: Colors.grey,
-                                    ))),
+                      child: ListView.separated(
+                        controller: _scrollController,
+                        itemCount: messageList.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return MessageBubble(
+                              message: messageList[i], press: () => {});
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.25,
                       decoration: const BoxDecoration(color: darkOrange),
@@ -117,21 +122,21 @@ class _HomePageState extends State<HomePage> {
                             FloatingActionButton(
                               onPressed: () {
                                 if (newMessage != "") {
-                                  /*Message mesToList = Message(
+                                  Message mesToList = Message(
                                       uuid: "my message uuid",
                                       user_name: "demo user",
                                       message_type: 1,
                                       message_string: newMessage,
-                                      send_time: DateTime.now());*/
+                                      send_time: DateTime.now());
                                   var newMessageMap = {"message": newMessage};
 
-                                  Client.instance.post(
+                                  /*Client.instance.post(
                                       data: newMessageMap,
-                                      endpoint: '/messages');
+                                      endpoint: '/messages');*/
                                   msgController.clear();
-                                  /*setState(() {
+                                  setState(() {
                                     messageList.add(mesToList);
-                                  });*/
+                                  });
                                 }
                               },
                               child: const Icon(
@@ -156,40 +161,55 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.25,
                 decoration: const BoxDecoration(color: turquoise),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      FutureBuilder<Map>(
-                        future: myUserName,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Card(
-                                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: userList.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return Card(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(userList[i]),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    FutureBuilder<Map>(
+                      future: myUserName,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Card(
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 ListTile(
                                   title: Text(snapshot.data!['UserName']),
                                 ),
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      TextButton(
-                                        child: const Text('Log out'),
-                                        onPressed: () {/* ... */},
-                                      ),
-                                    ]),
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    TextButton(
+                                      child: const Text('Log out'),
+                                      onPressed: () {/* ... */},
+                                    ),
+                                  ],
+                                ),
                               ],
-                            ));
-                          }
-                          return const Text('Loading...');
-                        },
-                      ),
-                      MaterialButton(
-                        onPressed: () => Client.instance
-                            .get(endpoint: '/users')
-                            .then((value) => print(value)),
-                      ),
-                      const Card(),
-                    ]),
+                            ),
+                          );
+                        }
+                        return const Text('Loading...');
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

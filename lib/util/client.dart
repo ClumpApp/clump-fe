@@ -28,7 +28,7 @@ class Client {
 
   Future<bool> login(
       {required String username, required String password}) async {
-    //return true;
+    return true;
     var response = await _client.post(Uri.parse(_baseURL + '/account/login'),
         body: jsonEncode({'Username': username, 'Password': password}),
         headers: headers);
@@ -72,8 +72,8 @@ class Client {
   }
 
   Future<List<dynamic>> getAll({required String endpoint}) async {
-    //if (endpoint == '/users') return jsonDecode(users);
-    //if (endpoint == '/messages') return jsonDecode(messages);
+    if (endpoint == '/users') return jsonDecode(users);
+    if (endpoint == '/messages') return jsonDecode(messages);
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
@@ -169,16 +169,36 @@ final messages = '''
 ]
 ''';
 
-final users = '''
+const users = '''
 [
   {
-    "UserName": "ozi",
+    "UserName": "oguzhan",
     "UserMail": "o@clump",
     "ProfilePicture": ""
   },
   {
-    "UserName": "demo2",
+    "UserName": "ismail",
+    "UserMail": "ismail@example.com",
+    "ProfilePicture": ""
+  },
+  {
+    "UserName": "serdar",
+    "UserMail": "serdar@clump",
+    "ProfilePicture": ""
+  },
+  {
+    "UserName": "mehmet",
+    "UserMail": "o@clump",
+    "ProfilePicture": ""
+  },
+  {
+    "UserName": "cimcime",
     "UserMail": "demo2@example.com",
+    "ProfilePicture": ""
+  },
+   {
+    "UserName": "sevki",
+    "UserMail": "sevki@example.com",
     "ProfilePicture": ""
   }
 ]
