@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import '../pages/signup_register.dart';
 import 'package:http/browser_client.dart';
-import '../group/message_details.dart';
 
 const _baseURL = 'https://clump-be.azurewebsites.net';
+const _baseWS = 'wss://clump-be.azurewebsites.net';
 const _baseAPI = '/api/v1';
 const _authScheme = 'Bearer ';
 
@@ -102,6 +101,14 @@ class Client {
 
   void resetClient() {
     headers = {};
+  }
+
+  String getWSAddress() {
+    return _baseWS +
+        _baseAPI +
+        "/ws/messages" +
+        "?token=" +
+        headers[HttpHeaders.authorizationHeader]!;
   }
 }
 

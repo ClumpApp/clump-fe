@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../group/message_details.dart';
 import '../util/client.dart';
 import '../constants.dart';
@@ -25,6 +27,16 @@ class _HomePageState extends State<HomePage> {
     getMessages().then((value) => setState(() {
           messageList;
         }));
+    var channel = WebSocketChannel.connect(
+      Uri.parse(Client.instance.getWSAddress()),
+    );
+    channel.stream.listen((event) {
+      var newMessage = jsonDecode(event);
+      messageList.add(Message.fromJson(newMessage));
+      setState(() {
+        messageList;
+      });
+    });
     super.initState();
   }
 
