@@ -25,7 +25,7 @@ class Client {
   Future<bool> login(
       {required String username, required String password}) async {
     var response = await _client.post(Uri.parse(_baseURL + '/account/login'),
-        body: {'UserName': username, 'Password': password}, headers: headers);
+        body: {'Username': username, 'Password': password}, headers: headers);
 
     if (response.statusCode != 200) {
       return false;
@@ -76,7 +76,7 @@ class Client {
   Future<bool> post(
       {required Map<String, dynamic> data, required String endpoint}) async {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
-        body: data, headers: headers);
+        body: jsonEncode(data), headers: headers);
 
     if (response.statusCode != 201) {
       return false;
@@ -88,7 +88,7 @@ class Client {
       {required List<Map<String, dynamic>> data,
       required String endpoint}) async {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
-        body: data, headers: headers);
+        body: jsonEncode(data), headers: headers);
 
     if (response.statusCode != 201) {
       return false;
