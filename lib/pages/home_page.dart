@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                                       data: newMessageMap,
                                       endpoint: '/messages');*/
                                   msgController.clear();
-                                  _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                                  _scrollController.jumpTo((_scrollController.position.maxScrollExtent));
                                   setState(() {
                                     messageList.add(mesToList);
                                   });
