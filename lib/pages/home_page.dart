@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String newMessage = "";
+  var msgController = TextEditingController();
+  var _scrollController = ScrollController();
   Future<Map<String, dynamic>> myUserName =
       Client.instance.get(endpoint: '/users/me');
 
@@ -33,14 +35,6 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 1,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: themeColor),
-                child: Column(),
-              ),
-            ),
-            Expanded(
               flex: 7,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
@@ -49,6 +43,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                         child: ListView.separated(
+                            controller: _scrollController,
                             itemCount: messageList.length,
                             itemBuilder: (BuildContext context, int i) {
                               return MessageBubble(
@@ -67,6 +62,7 @@ class _HomePageState extends State<HomePage> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
+                        margin: const EdgeInsets.all(20),
                         padding: const EdgeInsets.only(
                             left: 10, bottom: 10, top: 10),
                         height: 55,
@@ -94,7 +90,10 @@ class _HomePageState extends State<HomePage> {
                                 onChanged: (str) {
                                   newMessage = str;
                                 },
+                                controller: msgController,
                                 decoration: const InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.only(bottom: 15),
                                     hintText: "Message",
                                     hintStyle: TextStyle(color: Colors.black54),
                                     border: InputBorder.none),
@@ -114,10 +113,11 @@ class _HomePageState extends State<HomePage> {
                                       send_time: DateTime.now());
                                   var newMessageMap = {"message": newMessage};
 
-                                  Client.instance.post(
+                                  /*Client.instance.post(
                                       data: newMessageMap,
-                                      endpoint: '/messages');
-
+                                      endpoint: '/messages');*/
+                                  msgController.clear();
+                                  _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                                   setState(() {
                                     messageList.add(mesToList);
                                   });
@@ -145,16 +145,29 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.25,
                 decoration: const BoxDecoration(color: Colors.blue),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      CircleAvatar(
-                        radius: ((MediaQuery.of(context).size.width) * 0.05),
-                      ),
                       FutureBuilder<Map>(
                         future: myUserName,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return Text(snapshot.data!['UserName']);
+                            return Card(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(snapshot.data!['UserName']),
+                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      TextButton(
+                                        child: const Text('Log out'),
+                                        onPressed: () {/* ... */},
+                                      ),
+                                    ]),
+                              ],
+                            ));
                           }
                           return const Text('Loading...');
                         },
