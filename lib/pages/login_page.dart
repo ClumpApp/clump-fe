@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
         Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/backgrounds/Clump BG_empty.png"),
+          image: AssetImage("assets/Clump BG_empty.png"),
           fit: BoxFit.cover,
         ),
       ),

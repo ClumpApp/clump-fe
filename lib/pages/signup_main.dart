@@ -87,8 +87,7 @@ class _SignUpMain extends State<SignUpMain_> {
         padding: EdgeInsets.only(top: screenSize.height / 4),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image:
-                AssetImage("assets/images/backgrounds/Clump BG_interests1.png"),
+            image: AssetImage("assets/Clump BG_interests1.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -165,7 +164,7 @@ class _SignUpMain extends State<SignUpMain_> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(interest.picture),
+                  image: AssetImage("assets/" + interest.picture),
                   fit: BoxFit.cover,
                 ),
               ),
