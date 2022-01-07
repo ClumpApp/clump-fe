@@ -55,21 +55,22 @@ class _HomePageState extends State<HomePage> {
               flex: 7,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: themeColor),
+                decoration: const BoxDecoration(color: Colors.black),
                 child: Column(
                   children: [
                     Expanded(
-                      child: ListView.separated(
+                      child: ListView.builder(
                         controller: _scrollController,
                         itemCount: messageList.length,
                         itemBuilder: (BuildContext context, int i) {
                           return MessageBubble(
                               message: messageList[i], press: () => {});
                         },
+                        /*
                         separatorBuilder: (BuildContext context, int index) =>
                             const Divider(
                           color: Colors.grey,
-                        ),
+                        ),*/
                       ),
                     ),
                     Container(
@@ -103,12 +104,15 @@ class _HomePageState extends State<HomePage> {
                               width: 15,
                             ),
                             Expanded(
+                              
                               child: TextField(
+                                
                                 onChanged: (str) {
                                   newMessage = str;
                                 },
                                 controller: msgController,
                                 decoration: const InputDecoration(
+                                  fillColor: Colors.white,
                                     contentPadding:
                                         const EdgeInsets.only(bottom: 15),
                                     hintText: "Message",
@@ -172,7 +176,9 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
+                                
                                 ListTile(
+                                  
                                   title: Text(userList[i]),
                                 ),
                               ],
