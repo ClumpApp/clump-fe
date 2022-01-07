@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../group/message_details.dart';
 import '../group/user_details.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _key1 = GlobalKey();
   String newMessage = "";
   var msgController = TextEditingController();
   var _scrollController = ScrollController();
@@ -52,19 +54,104 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 7,
+              flex: 3,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: Colors.black),
+                decoration: const BoxDecoration(color: darkGrey),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 15),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey.shade600,
+                        radius: 3 * (MediaQuery.of(context).size.width) / 60,
+                        child: Icon(
+                          Icons.group,
+                          size: (3 * (MediaQuery.of(context).size.width) / 60),
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: userList.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Card(
+                              color: Colors.grey.shade600,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    title: Text(userList[i]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    FutureBuilder<Map>(
+                      future: myUserName,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Card(
+                              color: Colors.grey.shade600,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    title: Text(snapshot.data!['UserName']),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      TextButton(
+                                        child: const Text('Log out'),
+                                        onPressed: () {/* ... */},
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                        return const Text('Loading...');
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 13,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                decoration: const BoxDecoration(color: darkPurple),
                 child: Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
+                      child: ListView.separated(
                         controller: _scrollController,
                         itemCount: messageList.length,
                         itemBuilder: (BuildContext context, int i) {
                           return MessageBubble(
                               message: messageList[i], press: () => {});
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            thickness: 2,
+                          );
                         },
                         /*
                         separatorBuilder: (BuildContext context, int index) =>
@@ -104,15 +191,13 @@ class _HomePageState extends State<HomePage> {
                               width: 15,
                             ),
                             Expanded(
-                              
                               child: TextField(
-                                
                                 onChanged: (str) {
                                   newMessage = str;
                                 },
                                 controller: msgController,
                                 decoration: const InputDecoration(
-                                  fillColor: Colors.white,
+                                    fillColor: Colors.white,
                                     contentPadding:
                                         const EdgeInsets.only(bottom: 15),
                                     hintText: "Message",
@@ -154,65 +239,6 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.25,
-                decoration: const BoxDecoration(color: turquoise),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: userList.length,
-                        itemBuilder: (BuildContext context, int i) {
-                          return Card(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                
-                                ListTile(
-                                  
-                                  title: Text(userList[i]),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    FutureBuilder<Map>(
-                      future: myUserName,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Card(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ListTile(
-                                  title: Text(snapshot.data!['UserName']),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    TextButton(
-                                      child: const Text('Log out'),
-                                      onPressed: () {/* ... */},
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        return const Text('Loading...');
-                      },
                     ),
                   ],
                 ),

@@ -20,53 +20,48 @@ class MessageBubble extends StatelessWidget {
       focusColor: Colors.white,
       splashColor: Colors.white,
       highlightColor: Colors.white,
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20 * 0.75),
-        color: darkGrey,
-        child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 5, vertical: 10 * 0.75),
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        message.user_name,
-                        style: const TextStyle(
-                            color: darkOrange,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Opacity(
-                            opacity: 1,
-                            child: Text(
-                              message.message_string,
-                              style: const TextStyle(color: Colors.white),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10 * 0.75),
+        child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      message.user_name,
+                      style: const TextStyle(
+                          color: darkOrange,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Opacity(
+                          opacity: 1,
+                          child: Text(
+                            message.message_string,
+                            style: const TextStyle(color: Colors.white),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          Text(
-                            message.send_time.toString(),
-                            style: const TextStyle(color: Colors.grey),
-                            textAlign: TextAlign.end,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Text(
+                          message.send_time.toString(),
+                          style: const TextStyle(color: Colors.grey),
+                          textAlign: TextAlign.end,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
