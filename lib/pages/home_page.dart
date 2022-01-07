@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                         height: 55,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: darkGrey,
+                          color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
@@ -196,12 +196,13 @@ class _HomePageState extends State<HomePage> {
                                   newMessage = str;
                                 },
                                 controller: msgController,
-                                decoration: const InputDecoration(
-                                    fillColor: Colors.white,
+                                decoration: InputDecoration(
+                                    fillColor: Colors.grey.shade300,
                                     contentPadding:
                                         const EdgeInsets.only(bottom: 15),
                                     hintText: "Message",
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey.shade600),
                                     border: InputBorder.none),
                               ),
                             ),
@@ -228,9 +229,9 @@ class _HomePageState extends State<HomePage> {
                                   });
                                 }
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.send,
-                                color: darkGrey,
+                                color: Colors.grey.shade300,
                                 size: 18,
                               ),
                               backgroundColor: themeColor,
@@ -255,7 +256,7 @@ class _HomePageState extends State<HomePage> {
         value: item,
         child: Row(
           children: [
-            Icon(item.icon, color: Colors.grey),
+            Icon(item.icon, color: Colors.black),
             Text(item.text),
           ],
         ),
