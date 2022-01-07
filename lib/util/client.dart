@@ -28,7 +28,7 @@ class Client {
 
   Future<bool> login(
       {required String username, required String password}) async {
-    return true;
+    //return true;
     var response = await _client.post(Uri.parse(_baseURL + '/account/login'),
         body: jsonEncode({'Username': username, 'Password': password}),
         headers: headers);
@@ -61,7 +61,7 @@ class Client {
   }
 
   Future<Map<String, dynamic>> get({required String endpoint}) async {
-    if (endpoint == '/users/me') return jsonDecode(user);
+    //if (endpoint == '/users/me') return jsonDecode(user);
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
@@ -72,8 +72,8 @@ class Client {
   }
 
   Future<List<dynamic>> getAll({required String endpoint}) async {
-    if (endpoint == '/users') return jsonDecode(users);
-    if (endpoint == '/messages') return jsonDecode(messages);
+    //if (endpoint == '/users') return jsonDecode(users);
+    //if (endpoint == '/messages') return jsonDecode(messages);
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
@@ -115,7 +115,7 @@ class Client {
   }
 }
 
-final messages = '''
+const messages = '''
 [
   {
     "uuid": "b1549ebf-d422-4248-b51b-9c08a37affe7",
@@ -162,8 +162,8 @@ final messages = '''
   {
     "uuid": "944bd605-9355-4897-b3bb-daf2258a5227",
     "username": "ozi",
-    "type": 1,
-    "messagestr": "I am using web",
+    "type": 2,
+    "messagestr": "anime.png",
     "date": "2022-01-06T04:03:02.744772+03:00"
   }
 ]
@@ -204,7 +204,7 @@ const users = '''
 ]
 ''';
 
-final user = '''
+const user = '''
 {
   "UserName": "ozi",
   "UserMail": "o@clump",

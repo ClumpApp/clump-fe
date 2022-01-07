@@ -206,21 +206,22 @@ class _HomePageState extends State<HomePage> {
                             FloatingActionButton(
                               onPressed: () {
                                 if (newMessage != "") {
-                                  Message mesToList = Message(
+                                  /*Message mesToList = Message(
                                       uuid: "my message uuid",
                                       user_name: "demo user",
                                       message_type: 1,
                                       message_string: newMessage,
                                       send_time: DateTime.now());
-                                  var newMessageMap = {"message": newMessage};
-
-                                  /*Client.instance.post(
-                                      data: newMessageMap,
-                                      endpoint: '/messages');*/
-                                  msgController.clear();
                                   setState(() {
                                     messageList.add(mesToList);
-                                  });
+                                  });*/
+                                  var newMessageMap = {"message": newMessage};
+
+                                  Client.instance.post(
+                                      data: newMessageMap,
+                                      endpoint: '/messages');
+
+                                  msgController.clear();
                                 }
                               },
                               child: Icon(
