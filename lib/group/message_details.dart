@@ -14,6 +14,31 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget wid;
+    if (message.message_type == 2) {
+      var screenSize = MediaQuery.of(context).size;
+      wid = Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("media/" + message.message_string),
+            fit: BoxFit.fitHeight,
+            alignment: Alignment.centerLeft,
+          ),
+        ),
+        width: screenSize.width / 2,
+        height: screenSize.height / 3,
+      );
+    } else {
+      wid = Opacity(
+        opacity: 1,
+        child: Text(
+          message.message_string,
+          style: const TextStyle(color: Colors.white),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
+    }
     return InkWell(
       onTap: press,
       hoverColor: Colors.white,
@@ -41,15 +66,7 @@ class MessageBubble extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Opacity(
-                          opacity: 1,
-                          child: Text(
-                            message.message_string,
-                            style: const TextStyle(color: Colors.white),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                        wid,
                         Text(
                           message.send_time.toString(),
                           style: const TextStyle(color: Colors.grey),
