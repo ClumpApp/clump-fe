@@ -19,11 +19,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String newMessage = "";
+  String username = "Loading";
   var msgController = TextEditingController();
   final _scrollController = ScrollController();
-
-  Future<Map<String, dynamic>> myUserName =
-      Client.instance.get(endpoint: '/users/me');
 
   @override
   void initState() {
@@ -32,6 +30,9 @@ class _HomePageState extends State<HomePage> {
         }));
     getUserNames().then((value) => setState(() {
           userList;
+        }));
+    Client.instance.get(endpoint: '/users/me').then((value) => setState(() {
+          username = value['UserName'];
         }));
     var channel = WebSocketChannel.connect(
       Uri.parse(Client.instance.getWSAddress()),
@@ -98,37 +99,29 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ),
-                    FutureBuilder<Map>(
-                      future: myUserName,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: Card(
-                              color: Colors.grey.shade500,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text(snapshot.data!['UserName']),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      TextButton(
-                                        child: const Text('Log out'),
-                                        onPressed: () {/* ... */},
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: Card(
+                        color: Colors.grey.shade500,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(username),
                             ),
-                          );
-                        }
-                        return const Text('Loading...');
-                      },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                TextButton(
+                                  child: const Text('Log out'),
+                                  onPressed: () {/* TODO */},
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
