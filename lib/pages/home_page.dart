@@ -18,10 +18,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _key1 = GlobalKey();
   String newMessage = "";
   var msgController = TextEditingController();
-  var _scrollController = ScrollController();
+  final _scrollController = ScrollController();
+
   Future<Map<String, dynamic>> myUserName =
       Client.instance.get(endpoint: '/users/me');
 
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 15),
                       child: CircleAvatar(
-                        backgroundColor: Colors.grey.shade600,
+                        backgroundColor: Colors.grey.shade500,
                         radius: 3 * (MediaQuery.of(context).size.width) / 60,
                         child: Icon(
                           Icons.group,
@@ -77,13 +77,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                        controller: _scrollController,
                         itemCount: userList.length,
                         itemBuilder: (BuildContext context, int i) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Card(
-                              color: Colors.grey.shade600,
+                              color: Colors.grey.shade500,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
@@ -105,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 10),
                             child: Card(
-                              color: Colors.grey.shade600,
+                              color: Colors.grey.shade500,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
