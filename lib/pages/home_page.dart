@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
     channel.stream.listen((event) {
       var newMessage = jsonDecode(event);
       messageList.add(Message.fromJson(newMessage));
-      _scrollController.jumpTo((_scrollController.position.maxScrollExtent));
       setState(() {
         messageList;
       });
@@ -49,6 +48,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
+      _scrollController.jumpTo((_scrollController.position.maxScrollExtent));
+    });
     return Scaffold(
       body: Container(
         child: Row(
