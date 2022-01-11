@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/browser_client.dart';
+import 'package:http/http.dart';
 
 const _baseURL = 'https://clump-be.azurewebsites.net';
 const _baseWS = 'wss://clump-be.azurewebsites.net';
@@ -33,7 +34,7 @@ class Client {
         body: jsonEncode({'Username': username, 'Password': password}),
         headers: headers);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != HttpStatus.ok) {
       return false;
     }
 
@@ -51,7 +52,7 @@ class Client {
             {'Username': username, 'Password': password, 'Email': email}),
         headers: headers);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != HttpStatus.ok) {
       return false;
     }
 
@@ -65,7 +66,7 @@ class Client {
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != HttpStatus.ok) {
       throw Exception("Error while fetching data");
     }
     return jsonDecode(response.body);
@@ -77,7 +78,7 @@ class Client {
     var response = await _client.get(Uri.parse(_baseURL + _baseAPI + endpoint),
         headers: headers);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != HttpStatus.ok) {
       throw Exception("Error while fetching data");
     }
     return jsonDecode(response.body);
@@ -88,7 +89,7 @@ class Client {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
         body: jsonEncode(data), headers: headers);
 
-    if (response.statusCode != 201) {
+    if (response.statusCode != HttpStatus.created) {
       return false;
     }
     return true;
@@ -100,10 +101,21 @@ class Client {
     var response = await _client.post(Uri.parse(_baseURL + _baseAPI + endpoint),
         body: jsonEncode(data), headers: headers);
 
-    if (response.statusCode != 201) {
+    if (response.statusCode != HttpStatus.created) {
       return false;
     }
     return true;
+  }
+
+  Future<bool> uploadFile(List<int> bytes, String filename) async {
+    var request = MultipartRequest(
+        "POST", Uri.parse(_baseURL + _baseAPI + "/messages/image"));
+    request.headers[HttpHeaders.authorizationHeader] =
+        headers[HttpHeaders.authorizationHeader]!;
+    var file = MultipartFile.fromBytes('image', bytes, filename: filename);
+    request.files.add(file);
+    var res = await request.send();
+    return res.statusCode == HttpStatus.ok;
   }
 
   void resetClient() {

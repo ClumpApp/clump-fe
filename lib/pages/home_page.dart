@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/rendering.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../group/message_details.dart';
@@ -257,11 +258,20 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-  selectedType(BuildContext context, SelectableItem item) {
+  Future<bool> selectedType(BuildContext context, SelectableItem item) async {
     switch (item) {
       case popUpItems.photo:
         print("photo action");
-        break;
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.image,
+        );
+        if (result != null) {
+          var file = result.files.first;
+          List<int> bytes = List.from(file.bytes!);
+          Client.instance.uploadFile(bytes, file.name);
+          return true;
+        }
+        return false;
       case popUpItems.video:
         print("video action");
         break;
@@ -272,5 +282,6 @@ class _HomePageState extends State<HomePage> {
         print("file action");
         break;
     }
+    return false;
   }
 }
