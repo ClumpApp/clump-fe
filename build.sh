@@ -7,3 +7,6 @@ flutter channel stable
 flutter config --enable-web
 
 flutter build web --web-renderer canvaskit --release
+
+cd build/web
+zip -r ../../build.zip *
