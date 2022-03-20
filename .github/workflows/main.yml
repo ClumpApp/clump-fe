@@ -1,4 +1,4 @@
-name: CI/CD
+name: Release
 
 env:
   REGISTRY: ghcr.io
