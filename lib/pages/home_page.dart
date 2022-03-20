@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           username = value['UserName'];
         }));
     var channel = WebSocketChannel.connect(
-      Uri.parse(Client.instance.getWSAddress()),
+      Client.instance.getWSAddress(),
     );
     channel.stream.listen((event) {
       var newMessage = jsonDecode(event);
@@ -148,11 +148,6 @@ class _HomePageState extends State<HomePage> {
                             thickness: 2,
                           );
                         },
-                        /*
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(
-                          color: Colors.grey,
-                        ),*/
                       ),
                     ),
                     Container(
@@ -207,15 +202,6 @@ class _HomePageState extends State<HomePage> {
                             FloatingActionButton(
                               onPressed: () {
                                 if (newMessage != "") {
-                                  /*Message mesToList = Message(
-                                      uuid: "my message uuid",
-                                      user_name: "demo user",
-                                      message_type: 1,
-                                      message_string: newMessage,
-                                      send_time: DateTime.now());
-                                  setState(() {
-                                    messageList.add(mesToList);
-                                  });*/
                                   var newMessageMap = {"message": newMessage};
 
                                   Client.instance.post(
@@ -259,28 +245,26 @@ class _HomePageState extends State<HomePage> {
       );
 
   Future<bool> selectedType(BuildContext context, SelectableItem item) async {
+    FileType type;
+    String endpoint;
     switch (item) {
       case popUpItems.photo:
-        print("photo action");
-        FilePickerResult? result = await FilePicker.platform.pickFiles(
-          type: FileType.image,
-        );
-        if (result != null) {
-          var file = result.files.first;
-          List<int> bytes = List.from(file.bytes!);
-          Client.instance.uploadFile(bytes, file.name);
-          return true;
-        }
-        return false;
-      case popUpItems.video:
-        print("video action");
+        type = FileType.image;
+        endpoint = "image";
         break;
-      case popUpItems.recording:
-        print("recording action");
+      default:
+        type = FileType.any;
+        endpoint = "other";
         break;
-      case popUpItems.document:
-        print("file action");
-        break;
+    }
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: type,
+    );
+    if (result != null) {
+      var file = result.files.first;
+      List<int> bytes = List.from(file.bytes!);
+      Client.instance.uploadFile(endpoint, bytes, file.name);
+      return true;
     }
     return false;
   }

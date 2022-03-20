@@ -16,11 +16,12 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget wid;
     if (message.message_type == 2) {
+      // Photo
       var screenSize = MediaQuery.of(context).size;
       wid = Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("media/" + message.message_string),
+            image: AssetImage(userAssets + message.message_string),
             fit: BoxFit.fitHeight,
             alignment: Alignment.centerLeft,
           ),
@@ -29,6 +30,7 @@ class MessageBubble extends StatelessWidget {
         height: screenSize.height / 3,
       );
     } else {
+      // Text
       wid = Opacity(
         opacity: 1,
         child: Text(

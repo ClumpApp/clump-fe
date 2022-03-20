@@ -34,7 +34,7 @@ class _SignUpSubState extends State<SignUpSub> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("media/Clump_BG_empty.png"),
+          image: AssetImage(mediaAssets + "Clump_BG_empty.png"),
           fit: BoxFit.cover,
         ),
       ),

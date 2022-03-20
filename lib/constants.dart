@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+// Media assets
+const mediaAssets = "media/";
+
+// User assets
+const userAssets = "media/uploads/";
+
 //color codes
 const lightOrange = Color(0xfffbc02d);
 const darkOrange = Color(0xfff57f12);

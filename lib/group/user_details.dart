@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
 import '../util/client.dart';
 
 class User {
   final String user_name;
   final String e_mail;
   final String profile_pic;
-
-
 
   User({
     required this.user_name,
@@ -16,9 +13,8 @@ class User {
 }
 
 String getUserName(Map<String, dynamic> json) {
-    return json['UserName'].toString();
-    
-  }
+  return json['UserName'].toString();
+}
 
 List<String> userList = [];
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum FileOptions { photo, video, voiceRecording, document }
+enum FileOptions { photo }
 
 class SelectableItem {
   final IconData icon;
@@ -13,27 +13,7 @@ class SelectableItem {
 }
 
 class popUpItems {
-  static const List<SelectableItem> popupContents = [
-    photo,
-    video,
-    recording,
-    document,
-  ];
+  static const List<SelectableItem> popupContents = [photo];
 
-  static const photo = SelectableItem(
-    icon: Icons.insert_photo,
-    text: 'Photo'
-  );
-static const video = SelectableItem(
-    icon: Icons.videocam,
-    text: 'Video'
-  );
-static const recording = SelectableItem(
-    icon: Icons.keyboard_voice,
-    text: 'Audio'
-  );
-static const document = SelectableItem(
-    icon: Icons.insert_drive_file,
-    text: 'File'
-  );
+  static const photo = SelectableItem(icon: Icons.insert_photo, text: 'Photo');
 }
